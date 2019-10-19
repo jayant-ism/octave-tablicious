@@ -1,0 +1,18 @@
+## Derived from col2num
+%% Test simple case
+%! assert (col2num ("a"), 1, 1e-16);
+
+%% Test case insensitivity
+%! assert (col2num ("A"), 1, 1e-16);
+
+%% Test more complicated string
+assert (col2num ("ydf"), 17010, 1e-16);
+
+%% Again, test case insensitivity
+assert (col2num ("Ydf"), 17010, 1e-16);
+assert (col2num ("yDf"), 17010, 1e-16);
+assert (col2num ("ydF"), 17010, 1e-16);
+assert (col2num ("YDf"), 17010, 1e-16);
+assert (col2num ("yDF"), 17010, 1e-16);
+assert (col2num ("YdF"), 17010, 1e-16);
+assert (col2num ("YDF"), 17010, 1e-16);

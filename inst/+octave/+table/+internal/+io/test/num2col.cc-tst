@@ -1,0 +1,6 @@
+## Derived from num2col.cc
+%% Simple case
+assert (num2col (1), "A");
+
+%% More complicated case
+assert (num2col (17010), "YDF");
