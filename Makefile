@@ -206,7 +206,7 @@ check: $(install_stamp)
 .PHONY: local doc clean-local
 
 local: src/__oct_time_binsearch__.cc octave_chrono_make_local.m
-	$(OCTAVE) --eval="octave_chrono_make_local"
+	$(OCTAVE) --eval="__octave_tablicious_make_local__"
 
 doc:
 	cd doc && make all
