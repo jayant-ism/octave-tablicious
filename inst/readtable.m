@@ -30,6 +30,8 @@
 ## @code{readtable} does not currently support detecting and converting date values
 ## in the input data. For now, they'll come back as numerics or strings, and you'll
 ## need to convert them yourself.
+##
+## @end deftypefn
 
 function out = readtable (filename, varargin)
 
