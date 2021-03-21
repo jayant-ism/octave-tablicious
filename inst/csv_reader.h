@@ -1,0 +1,136 @@
+#include<iostream>
+#include<sstream>
+#include<fstream>
+#include<vector>
+#include<stdio.h>
+
+
+/* first take the input , then find the header 
+   store them into a vector   consider all of the data as string 
+   now  design a 2d vector with 
+   each data type as pair consisting the value 
+   and the type of data it can be converted
+  
+  Now we have access to the data with all convinience 
+
+--------------------------------------------------------------------------------
+  Allocate the functions for acchiving the points of the csv files
+
+
+-------------------------------------------------------------------------------
+  Convert the data to a table in octave 
+
+
+*/
+
+namespace csv_reader{
+
+
+class csv_datatype{
+  public:
+    std::vector<std::string> header_csv ;
+    std::vector<std::vector<std::pair<std::string ,std::string>>> data ; // [ {data , data_type }]
+
+
+  private :
+
+    std::string decide_value(std::string value )
+    {
+      //the data will either be  a string or a float 
+
+      bool its_float =1 ; 
+      for(auto i :  value)
+      {
+        if( i != '.' &&( i < '0' || i > '9' ) )
+          its_float = 0 ;        
+      }
+      if (its_float)
+      {
+        return "std::float" ; 
+      }else
+      return "std:string" ; 
+    }
+
+    std::vector<std::pair<std::string ,std::string>>get_individual(std::string line )
+    {
+      std::vector<std::pair<std::string ,std::string>>output ; 
+      std::vector<std::string> devide ; 
+      std::string temp ; 
+
+      int block  = 0  ;
+      for(auto i : line)
+      {
+        if(block ==1 )
+        {
+          if(i=='"')
+          {
+            block =  0 ; 
+          }
+          else{
+            temp.push_back(i) ; 
+          }
+        }else 
+        {
+          if( i== ',' )
+          {
+            devide.push_back(temp) ; 
+            temp = ""; 
+
+
+          }   
+          else if( i== '"')
+          {
+            block = 1 ;
+
+          }else
+          {
+            temp.push_back(i) ; 
+
+          }
+        }
+      }
+      if(temp!="")
+      {
+        devide.push_back(temp) ; 
+      }
+      for(auto i :  devide )
+      {
+        output.push_back( { i,decide_value(i)}) ; 
+
+      }
+
+      return output ; 
+
+
+
+    }
+
+
+
+  public:
+
+  void read_record(std::string location) 
+    { 
+  
+      std::fstream fin; 
+      fin.open(location, std::ios::in); 
+      std::vector<std::string> row; 
+      std::string line, word, temp; 
+      getline(fin , line) ; 
+      std::vector<std::pair<std::string ,std::string>> temps = get_individual(line)  ;
+      for(auto i : temps)
+      {
+        header_csv.push_back(i.first) ;  
+      }   
+      while ( getline(fin, line) ) { 
+          data.push_back(get_individual(line)) ; 
+      } 
+    } 
+
+
+
+
+};
+
+}
+
