@@ -33,22 +33,32 @@ class csv_datatype{
 
 
   private :
+    bool its_float(std::string value) 
+    {
+      int dots = 0 ; 
+      for(auto i :  value)
+      {
+        if( i != '.' &&( i < '0' || i > '9' ) )
+          return 0 ;  // if it contains any other char 
+        if(i=='.')
+          dots++ ; 
+        if(dots > 1 )
+          return 0 ;  // if it has more than one dots
+      }
+      return 1 ; 
+
+
+    }
 
     std::string decide_value(std::string value )
     {
       //the data will either be  a string or a float 
 
-      bool its_float =1 ; 
-      for(auto i :  value)
-      {
-        if( i != '.' &&( i < '0' || i > '9' ) )
-          its_float = 0 ;        
-      }
-      if (its_float)
+      if (its_float(value) )
       {
         return "std::float" ; 
-      }else
-      return "std:string" ; 
+      }
+      return "std::string" ; // the datetime will also come under the string class 
     }
 
     std::vector<std::pair<std::string ,std::string>>get_individual(std::string line )
@@ -109,7 +119,7 @@ class csv_datatype{
 
   public:
 
-  void read_record(std::string location) 
+  void read_record(std::string location , std::string header_required )  
     { 
   
       std::fstream fin; 
@@ -117,11 +127,17 @@ class csv_datatype{
       std::vector<std::string> row; 
       std::string line, word, temp; 
       getline(fin , line) ; 
-      std::vector<std::pair<std::string ,std::string>> temps = get_individual(line)  ;
+      if(header_required)
+      {
+        std::vector<std::pair<std::string ,std::string>> temps = get_individual(line)  ;
       for(auto i : temps)
       {
         header_csv.push_back(i.first) ;  
       }   
+
+      }
+      
+
       while ( getline(fin, line) ) { 
           data.push_back(get_individual(line)) ; 
       } 
