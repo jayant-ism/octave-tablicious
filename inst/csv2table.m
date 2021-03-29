@@ -1,6 +1,7 @@
 
 function value =  csv2table(file_location , headers = "0" )
-    [header , data , data_type] = csv_matrix([file_location] , headers ) ;
+    [header , data , data_type] = csv_matrix(file_location , headers ) ;
+
     index = 0 ;
     
     values = table() ; 

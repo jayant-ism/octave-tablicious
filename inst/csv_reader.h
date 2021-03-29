@@ -126,9 +126,11 @@ class csv_datatype{
       fin.open(location, std::ios::in); 
       std::vector<std::string> row; 
       std::string line, word, temp; 
-      getline(fin , line) ; 
-      if(header_required)
-      {
+      
+      
+      if(header_required=="1")
+      { 
+        getline(fin , line) ; 
         std::vector<std::pair<std::string ,std::string>> temps = get_individual(line)  ;
       for(auto i : temps)
       {

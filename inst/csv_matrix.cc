@@ -3,8 +3,6 @@
 #include "csv_reader.h"
 #include<vector>
 #include "str-vec.h"
-#include "ov-base.h"
-
 
 DEFUN_DLD (csv_matrix,  args, , "String Demo")
 {
@@ -20,7 +18,6 @@ DEFUN_DLD (csv_matrix,  args, , "String Demo")
 
   charMatrix need_header = args(1).char_matrix_value ();
   std::string header_req  = need_header.row_as_string(0) ;
-
 
 
 
@@ -49,7 +46,7 @@ for( auto headers : table.header_csv )
 
 }
 
-long long int number_rows = table.data.size() ,  number_columns = table.header_csv.size()   ;
+long long int number_rows = table.data.size() ,  number_columns = table.data[0].size()   ;
 
 
 
